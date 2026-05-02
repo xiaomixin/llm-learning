@@ -28,30 +28,43 @@ open transformer-12week-plan.md
 │   ├── env_check.ipynb          # Colab 环境自检
 │   ├── 01_eda.ipynb             # Kaggle Credit Card Fraud EDA
 │   └── requirements.txt
+├── templates/
+│   └── notebook_template.ipynb  # 新 notebook 从这里复制（含 bootstrap cell）
 ├── scripts/
 │   ├── learning_schedule.json   # 12 周 × 5 天的完整 schedule
 │   ├── security_check.sh        # 提交前扫密钥/凭证
 │   ├── env_self_check.py        # Colab 环境自检
 │   ├── download_kaggle.py       # Kaggle 数据一键下载
-│   └── sync_to_drive.sh         # 同步 notebook 到 Google Drive
+│   └── sync_to_drive.sh         # 备用：同步 notebook 到 Google Drive
 └── .githooks/pre-commit         # 调用 security_check.sh
 ```
 
-## Colab 工作流
+## Colab 工作流（双向同步）
 
-VS Code 本地编辑 → Google Drive 同步 → Colab 运行：
+VS Code 本地 ↔ GitHub ↔ Colab，走 Colab 原生 GitHub 集成，免 Drive、免 PAT。
 
-1. 在 VS Code 本地编辑 + `git commit`
-2. 运行 `scripts/sync_to_drive.sh` 把 notebooks 拷贝到 Google Drive（本地 Drive 客户端会自动上云）
-3. Colab 里 `drive.mount()` 然后从 `MyDrive/<你的文件夹>/` 打开 notebook 运行
-4. Colab 端修改的 notebook 保存回 Drive，本地 Drive 客户端再同步回本地
-5. 本地 `git add + commit` 保留历史
-
-配置 Drive 路径：在 `scripts/` 目录创建 `sync.config.local`（已 gitignore），填入：
-
+**本地 → Colab**：
 ```bash
-DRIVE_DIR="$HOME/Library/CloudStorage/GoogleDrive-<your-email>/My Drive/<your-folder>"
+git add . && git commit -m "..." && git push
 ```
+Colab 菜单 `File → Open notebook → GitHub → xiaomixin/llm-learning`，或直接：
+```
+https://colab.research.google.com/github/xiaomixin/llm-learning/blob/main/week01/env_check.ipynb
+```
+
+**Colab → 本地**：Colab 菜单 `File → Save a copy in GitHub`（首次走 OAuth 授权），然后本地 `git pull`。
+
+### 新建 notebook
+
+从 `templates/notebook_template.ipynb` 复制。第一个 cell 是 bootstrap —— 自动检测 Colab/local、挂 Drive、读 Kaggle Secrets、设种子。
+
+### Colab Secrets（一次性配置）
+
+左侧 🔑 图标添加：
+- `KAGGLE_USERNAME`
+- `KAGGLE_KEY`
+
+**永远不要** 把 `kaggle.json` 上传到 Colab 文件系统或提交到仓库。
 
 ## 安全检查
 
