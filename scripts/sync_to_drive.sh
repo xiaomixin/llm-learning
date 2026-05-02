@@ -35,22 +35,33 @@ MODE="${1:-push}"
 
 # Files/folders to sync (notebooks, light scripts, docs). Exclude data/models.
 INCLUDE_FLAGS=(
-  --include='*/'               # descend into all dirs first
+  # 1. Exclude directories BEFORE the generic '*/' include (don't descend into them).
+  --exclude='.git'
+  --exclude='.githooks'
+  --exclude='data'
+  --exclude='models'
+  --exclude='checkpoints'
+  --exclude='__pycache__'
+  --exclude='.ipynb_checkpoints'
+
+  # 2. Exclude specific files BEFORE the generic file includes (first-match-wins).
+  --exclude='.DS_Store'
+  --exclude='*.log'
+  --exclude='scripts/*.config.local'
+  --exclude='scripts/daily_push.sh'
+  --exclude='scripts/daily_push.config.example'
+  --exclude='scripts/build_message.py'
+  --exclude='scripts/prep_message.md'
+  --exclude='.security-allowlist'
+
+  # 3. Descend into allowed dirs + whitelist file types.
+  --include='*/'
   --include='*.ipynb'
   --include='*.py'
   --include='*.md'
   --include='requirements.txt'
-  --exclude='.git/***'
-  --exclude='.githooks/***'
-  --exclude='data/***'
-  --exclude='models/***'
-  --exclude='checkpoints/***'
-  --exclude='__pycache__/***'
-  --exclude='.ipynb_checkpoints/***'
-  --exclude='.DS_Store'
-  --exclude='*.log'
-  --exclude='scripts/*.config.local'
-  --exclude='*'                # anything else excluded
+  --include='*.json'
+  --exclude='*'
 )
 
 push() {

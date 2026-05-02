@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Auto-sync to Google Drive after every commit, so Colab sees the latest files.
+# Runs in background so `git commit` returns immediately.
+# Silently skips if scripts/sync.config.local is missing (e.g. on a fresh clone).
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+SYNC="$REPO_ROOT/scripts/sync_to_drive.sh"
+CFG="$REPO_ROOT/scripts/sync.config.local"
+
+[[ -x "$SYNC" && -f "$CFG" ]] || exit 0
+
+# Run in background; log to /tmp so we can debug if a push goes missing.
+nohup bash "$SYNC" push >/tmp/sync_to_drive.log 2>&1 &
+disown || true
+echo "[post-commit] Drive sync running in background (log: /tmp/sync_to_drive.log)"
