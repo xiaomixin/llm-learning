@@ -51,3 +51,11 @@ logs/
 # Build artifacts
 dist/
 build/
+
+# Local-only helper scripts (internal messaging / daily-push infra)
+# Kept on disk for personal use, but never pushed to the public GitHub mirror.
+scripts/daily_push.sh
+scripts/daily_push.config.example
+scripts/build_message.py
+scripts/prep_message.md
+.security-allowlist

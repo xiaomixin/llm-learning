@@ -1,8 +1,9 @@
-# Transformer 12 周学习计划（场景驱动：交易流 → Transformer → 异常检测）
+# Transformer 12 周学习计划（场景驱动：交易序列 → Transformer → 异常检测）
 
-> **学习者画像**：深度学习有基础但生疏；Python 熟练；工具栈 Google Colab；场景聚焦交易/时序异常检测。
+> **学习者画像**：深度学习有基础但生疏；Python 熟练；工具栈 Google Colab；场景聚焦交易序列异常检测。
+> **数据来源**：公开 Kaggle 数据集（Credit Card Fraud、IEEE-CIS Fraud）+ 自生成合成交易数据。**本仓库不包含任何真实业务数据。**
 > **总时长**：12 周 × 10 小时 = 120 小时
-> **核心目标**：12 周后，能独立用 Transformer 在（脱敏/合成）交易流数据上做异常检测，并理解时序 Transformer 变体的优劣。
+> **核心目标**：12 周后，能独立用 Transformer 在交易序列（公开 Kaggle + 自生成合成）上做异常检测，并理解时序 Transformer 变体的优劣。
 
 ---
 
@@ -25,11 +26,11 @@
 
 - **理论**：能从零推导 Scaled Dot-Product Attention、Multi-Head Attention、Positional Encoding；能解释 Transformer 为什么比 RNN 更适合并行 + 长依赖；能理解 Informer/PatchTST/Anomaly Transformer 三种变体的核心改动。
 - **工程**：能用 PyTorch 从零实现一个 Transformer Encoder（不依赖 `nn.Transformer`）；能用 HuggingFace / 官方实现组合出完整 Pipeline；能在 Colab 免费 GPU (T4) 上训练并评估。
-- **业务**：能把"交易流"这种结构化序列数据映射成 Transformer 的输入格式（token 化、embedding、mask）；能设计合理的异常检测损失函数（reconstruction / classification / contrastive）；能回答"这个模型在产线能用吗？推理延迟？特征漂移怎么办？"
+- **业务**：能把交易序列（金额、时间、商户类目、地理、设备等多维特征）映射成 Transformer 输入格式（token 化、embedding、mask）；能设计合理的异常检测损失函数（reconstruction / classification / contrastive）；能回答"这个模型在产线能用吗？推理延迟？特征漂移怎么办？"
 
 ### 1.2 MVP 定义
 
-**场景一句话描述**：给定一个用户的近 N 笔交易序列（金额、时间、对手方、设备、地理等），判断最后一笔是否异常。
+**场景一句话描述**：给定一段近 N 笔交易序列（金额、时间、商户、地理、设备等），判断最后一笔（或整段）是否异常。**数据均为公开 Kaggle 数据集 + 自生成合成数据，不涉及任何真实业务数据。**
 
 ```
 输入:  x ∈ ℝ^(B × L × F)        # B=batch, L=序列长度(如64), F=特征维度
@@ -117,7 +118,7 @@
 | Credit Card Fraud Detection | W1-W2 入门，单笔交易二分类 | [Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) |
 | IEEE-CIS Fraud Detection | W10 进阶，更真实的特征 | [Kaggle](https://www.kaggle.com/competitions/ieee-fraud-detection) |
 | PaySim（合成支付数据） | W3-W4 序列建模，有 userId | [Kaggle](https://www.kaggle.com/datasets/ealaxi/paysim1) |
-| 自己生成的合成交易流 | W7-W8 验证 Transformer | 见 W3 任务 |
+| 自己生成的合成交易数据 | W7-W8 验证 Transformer | 见 W3 任务 |
 
 ---
 

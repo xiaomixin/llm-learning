@@ -2,6 +2,8 @@
 
 个人 LLM / Transformer 学习仓库。当前主项目：**交易序列 → Transformer → 异常检测**（12 周计划，每周 10 小时）。
 
+> **数据声明**：本项目使用 **公开 Kaggle 数据集**（Credit Card Fraud Detection、IEEE-CIS Fraud）与 **自生成合成交易数据**。仓库中不包含任何真实业务数据。
+
 ## 快速开始
 
 ```bash
