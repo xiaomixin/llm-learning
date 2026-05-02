@@ -1,0 +1,53 @@
+# Data & models (never commit large/sensitive data)
+data/
+models/
+checkpoints/
+*.csv
+*.parquet
+*.pt
+*.pth
+*.onnx
+*.bin
+*.safetensors
+
+# Kaggle credentials
+kaggle.json
+
+# Local config (personal / machine-specific)
+scripts/*.config.local
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+dist/
+build/

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Pre-commit hook: run security_check.sh on staged files.
+# Blocks commit if secrets or internal data detected.
+# Bypass (only if sure it's a false positive): git commit --no-verify
+
+set -e
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+exec bash "$REPO_ROOT/scripts/security_check.sh" --staged
