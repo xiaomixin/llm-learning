@@ -24,10 +24,39 @@
 
 ```
 week02/
-├── README.md                 ← 本文件
-├── 02_mlp_baseline.ipynb     ← MVP v0.1 主 notebook（训练 + 评估 + Focal Loss 对比）
-└── requirements.txt          ← 依赖 pin（与 Week 1 对齐 + sklearn）
+├── README.md                     ← 本文件
+├── 02_mlp_baseline.ipynb         ← MVP v0.1 主 notebook（训练 + 评估 + Focal Loss 对比）
+├── requirements.txt              ← 依赖 pin（与 Week 1 对齐 + sklearn）
+├── knowledge/                    ← 10 个渐进式概念讲解（每个一个 md）
+│   ├── 00_overview.md            ← 先看这个:学习路径
+│   ├── 01_tensor_and_autograd.md
+│   ├── 02_linear_layer.md
+│   ├── 03_mlp_build.md
+│   ├── 04_bce_loss.md
+│   ├── 05_training_loop.md
+│   ├── 06_pos_weight.md
+│   ├── 07_focal_loss.md
+│   ├── 08_data_split_scaler.md
+│   ├── 09_early_stopping.md
+│   └── 10_evaluation.md
+├── snippets/                     ← 每个概念配一个可独立运行的 python
+│   ├── _data.py                  ← （共享）creditcard.csv 路径查找
+│   ├── 01_tensor.py
+│   ├── ...
+│   └── 10_evaluation.py
+└── knowledge_legacy.md           ← 旧版高密度手册（消化完 10 个概念再当总复习）
 ```
+
+## 知识学习路径（新）
+
+旧 `knowledge.md` 太厚,现已拆成 **10 个独立概念** + **10 个可跑脚本**。推荐顺序:
+
+1. 打开 [`knowledge/00_overview.md`](knowledge/00_overview.md) 看学习路径。
+2. 按 01–10 顺序读 md,每读完一个就跑对应 `snippets/` 脚本验证。
+3. 全部读完后打开 `02_mlp_baseline.ipynb`,对着每个 cell 反推它用到了哪几个概念。
+
+概念脚本 01–07 自带合成数据,`python xx.py` 即可运行。
+数据脚本 08–10 需要 `creditcard.csv`（下载见 notebook cell 3,或手动放到 `week02/data/`）。
 
 ## 本周验收
 
